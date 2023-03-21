@@ -1,2 +1,3 @@
-# backend
-this repo contains the backend of tauschboerse
+# To Do
+- fix amount of token eventually? .25, .5, .75
+- 
