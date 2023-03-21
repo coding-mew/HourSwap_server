@@ -8,10 +8,10 @@ const TaskSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['request', 'offer', 'exchange'],
+    enum: ['request', 'offer'],
     required: true
   },
-  comment: {
+  description: {
     type: String,
     required: true
     

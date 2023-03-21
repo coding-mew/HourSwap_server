@@ -41,6 +41,10 @@ export const UserSchema = new Schema({
     required: true,
   },
   address: AddressSchema,
+  hourTokens: {
+    type: Number,
+    default: 1,
+  }
 
 });
 

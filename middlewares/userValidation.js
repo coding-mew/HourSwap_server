@@ -30,24 +30,23 @@ export const registerValidationRules = [
 ];
 
 export const validate = (req, res, next) => {
-try {
-  const token = req.cookies.token
-  console.log(token)
-  const payload = jwt.verify(token, process.env.SECRETKEY)
-  console.log("🚀 ~ file: userValidation.js:38 ~ validate ~ payload:", payload)
-  req.user = payload
-  // res.json(true)
-  next()
+  try {
+    const token = req.cookies.token;
+    const payload = jwt.verify(token, process.env.SECRETKEY);
+    console.log("🚀 ~ file: userValidation.js:38 ~ validate ~ payload:", payload);
+    req.user = payload;
+    next();
+  } catch (error) {
+    return res.status(401).json({ msg: 'invalid access token' });
+  }
+};
 
-} catch (error) {
-  return res.status(401).json({msg: 'invalid access token'})
-}
+export const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
-    // console.log('cookie', req.cookies)
-    return next();
+    next();
+  } else {
+    const error = createError(400, { errors: errors.array() });
+    next(error);
   }
-  const error = createError(400, { errors: errors.array() });
-  console.log(error)
-  next(error);
 };

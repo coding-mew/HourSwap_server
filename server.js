@@ -6,6 +6,7 @@ import "./db-connect.js";
 import { logRoutesData } from "./routes-data-logs.js";
 import userRoute from "./routes/userRoute.js";
 import taskRoute from "./routes/taskRoute.js";
+import transactionRoute from "./routes/transactionRoute.js";
 //  NPM RUN DEV TRUE For logging routes
 const app = express();
 app.use(express.json());
@@ -20,6 +21,8 @@ app.use(cors({
 
 app.use("/user", userRoute);
 app.use("/tasks", taskRoute);
+app.use("/transactions", transactionRoute);
+
 
 
 app.use((error, req, res, next) => {

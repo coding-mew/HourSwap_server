@@ -3,14 +3,14 @@ import Task from '../models/taskModel.js';
 
 const createTask = async (req, res) => {
   try {
-    const { topic, type, comment, valueToken } = req.body;
+    const { topic, type, description, valueToken } = req.body;
     console.log(req.user)
     const userId = req.user.userId;
 
     const task = await Task.create({
       topic,
       type,
-      comment,
+      description,
       valueToken,
       created_by: userId 
     });

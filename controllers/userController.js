@@ -80,6 +80,15 @@ export const login = async (req, res, next) => {
   }
 };
 
+// export const logout = (req, res) => {
+//   res.clearCookie('token');
+//   res.status(200).send('Logged out successfully');
+// }
+export const logout = (req, res) => {
+  res.clearCookie("token");
+  res.status(200).send("Logged out successfully");
+}
+
 export const getAllUsers = async (req, res) => {
   try {
     const allUsers = await User.find();
