@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
+
 const TransactionSchema = new mongoose.Schema({
+  
   sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   recipient: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   amount: { type: Number, min: 0, max: 10 },
