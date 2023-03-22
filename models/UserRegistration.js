@@ -40,6 +40,10 @@ export const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  profilePicture:{
+    type: String,
+    default: "https://picsum.photos/200/300"
+  },
   address: AddressSchema,
   hourTokens: {
     type: Number,

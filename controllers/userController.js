@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/UserRegistration.js";
 
 export const register = async (req, res, next) => {
-  const { firstName, lastName, email, password, city, street, postalCode } =
+  const { firstName, lastName, email, password, city, street, postalCode, profilePicture } =
     req.body;
   try {
     const userExists = await User.findOne({ email });
@@ -17,6 +17,7 @@ export const register = async (req, res, next) => {
       lastName,
       email,
       password,
+      profilePicture,
       address: {
         city,
         street,

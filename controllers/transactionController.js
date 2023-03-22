@@ -75,12 +75,21 @@ export const createTransaction = async (req, res) => {
         const currentUser = req.user.userId
         const { amount } = req.body;
         try { 
+          
             const recipient = await User.findById(currentUser);
             const newAmount = recipient.hourTokens += amount;
             await recipient.save();
+
+            const transaction = new Transaction({
+              sender: "641aee1d720ce9ce4b261188",
+              recipient: currentUser,
+              amount: newAmount
+            });
+            await transaction.save();
+
             res.json({ msg: `${amount} HourTokens added, your total amount is now ${newAmount} HourToken`, recipient,
            });
-        }catch{
+        }catch (error){
             console.error(error.message);
             res.status(500).json({ msg: 'Server error' });
         } 
