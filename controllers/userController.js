@@ -4,16 +4,8 @@ import jwt from "jsonwebtoken";
 import User from "../models/UserRegistration.js";
 
 export const register = async (req, res, next) => {
-  const {
-
-   firstName,
-   lastName,
-    email,
-    password, 
-      city,
-      street,
-      postalCode,
-  } = req.body;
+  const { firstName, lastName, email, password, city, street, postalCode } =
+    req.body;
   try {
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -21,17 +13,15 @@ export const register = async (req, res, next) => {
       next(error);
     }
     const user = new User({
-
       firstName,
       lastName,
-       email,
-       password,
-       address:{
-         city,
-         street,
-         postalCode,
-       }
-    
+      email,
+      password,
+      address: {
+        city,
+        street,
+        postalCode,
+      },
     });
     await user.save();
     const userWithoutPassword = user.toJSON();
@@ -45,51 +35,46 @@ export const register = async (req, res, next) => {
 };
 
 export const login = async (req, res, next) => {
+  console.log("login", req.body);
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user) {
       const error = createError(404, "email not found!");
-      next(error);
+      return next(error);
     }
     const matched = await user.comparePassword(password, user.password);
     if (!matched) {
-      const error = createError(500, { msg: "password incorrect!" });
-      next(error);
+      const error = createError(401, "Incorrect email or password");
+  return next(error);
     }
     const payload = { userId: user.id };
     const token = jwt.sign(payload, process.env.SECRETKEY, { expiresIn: "1h" });
-    console.log("🚀 ~ file: userController.js:72 ~ login ~ token:", token);
-    // send cookie:
-    // best option
     res.cookie("token", token, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // one day
     });
-    console.log(user);
     const userWithoutPassword = user.toJSON();
-    console.log(userWithoutPassword);
     res
       .status(200)
       .json({ msg: "you are logged in", user: userWithoutPassword });
-    // res.json({ msg: "you are logged in!!" });
+
   } catch (error) {
-    console.log("2");
-    console.log("🚀 ~ file: userController.js:78 ~ login ~ error:", error);
-    next(createError(500, { msg: "Server Error!" }));
+    // const errorMessage= createError(500, { msg: "Server Error!" });
+    next(error);
   }
 };
 
 export const logout = (req, res) => {
   res.clearCookie("token");
   res.status(200).send("Logged out successfully");
-}
+};
 
 export const getAllUsers = async (req, res) => {
   try {
     const allUsers = await User.find();
     res.json({ allUsers });
-    console.log("allUsers:", allUsers);
+    // console.log("allUsers:", allUsers);
   } catch (error) {
     console.log(
       "🚀 ~ file: userController.js:89 ~ getAllUsers ~ error:",
