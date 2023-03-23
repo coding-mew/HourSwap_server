@@ -81,6 +81,29 @@ const getAllOffers = async (req, res) => {
     }
 }
 
+
+export const searchCatalogue = async (req, res) => {
+  const { topic, type } = req.query;
+  const query = {};
+
+  if (topic) {
+    query.topic = topic;
+  }
+
+  if (type) {
+    query.type = type;
+  }
+
+  try {
+    const tasks = await Task.find(query);
+    res.json(tasks);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+;
+
 const getAllRequests = async (req, res) => {
     try {
       const tasks = await Task.find({ type: 'get' }).populate('created_by');
