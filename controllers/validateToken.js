@@ -8,7 +8,7 @@ export const validateToken = (req, res, next) => {
       console.log("i am secret", process.env.SECRETKEY)
       console.log("🚀 ~ file: userValidation.js:38 ~ validate ~ payload:", payload)
       req.user = payload
-      return res.json(true)
+      return res.status(200).json({msg: 'valid access token'})
 
     
     } catch (error) {

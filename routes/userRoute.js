@@ -21,7 +21,7 @@ const router = express.Router();
 
 router.post("/register", registerValidationRules, register);
 router.post("/login", loginValidationRules, login);
-router.get("/validate", validateToken)
+router.get("/validateToken", validateToken)
 router.get("/all", authenticate, validate, handleValidationErrors, getAllUsers);
 router.get(
   "/one/:id",
