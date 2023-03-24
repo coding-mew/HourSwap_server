@@ -80,6 +80,18 @@ export const logout = (req, res) => {
   }
 };
 
+export const getContactInfo = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    const contactInfo = { email: user.email }; // You can add other contact information to this object as well
+
+    res.status(200).json(contactInfo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 
 export const getAllUsers = async (req, res) => {
   try {
