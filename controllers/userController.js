@@ -84,14 +84,31 @@ export const getContactInfo = async (req, res) => {
   try {
     const userId = req.params.userId;
     const user = await User.findById(userId);
-    const contactInfo = { email: user.email }; // You can add other contact information to this object as well
-
+    const contactInfo = { email: user.email, firstName: user.firstName, lastName: user.lastName, profilePicture: user.profilePicture, id: userId }; 
+    console.log("contactInfo:", contactInfo)
     res.status(200).json(contactInfo);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+export const getCurrentUser = (req, res) => {
+  try {
+    const { id, email, firstName, lastName, profilePicture } = req.user;
+
+    res.json({
+      id,
+      email,
+      firstName,
+      lastName,
+      profilePicture,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 export const getAllUsers = async (req, res) => {
   try {

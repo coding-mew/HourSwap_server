@@ -14,7 +14,7 @@ import {
   login,
   getAllUsers,
   getUser,
-  deleteUser, logout, getContactInfo
+  deleteUser, logout, getContactInfo, getCurrentUser
 } from "../controllers/userController.js";
 import { validateToken } from "../controllers/validateToken.js";
 const router = express.Router();
@@ -35,6 +35,7 @@ router.delete(
 );
 router.post("/logout", logout)
 router.get("/:userId/getContactInfo",validate, getContactInfo)
+router.get('/getcurrentuser', validate, getCurrentUser)
 // checken ob token, wenn kein token:error
 // router.post("/tokenValid", authenticateToken);
 
