@@ -8,7 +8,7 @@ export const createTransaction = async (req, res) => {
       console.log("🚀 ~ file: transactionController.js:8 ~ createTransaction ~ senderId:", senderId)
       
       // Check if sender has enough HourTokens
-      const sender = await User.findById(senderId).populate('sender receiver');
+      const sender = await User.findById(senderId);
       if (sender.hourTokens < amount) {
         return res.status(400).json({ msg: 'Not enough HourTokens' });
       }
@@ -18,7 +18,7 @@ export const createTransaction = async (req, res) => {
       await sender.save();
   
       // Add amount to recipient's HourTokens and save
-      const recipient = await User.findById(recipientId).populate('sender receiver');
+      const recipient = await User.findById(recipientId);
       recipient.hourTokens += amount;
       await recipient.save();
   

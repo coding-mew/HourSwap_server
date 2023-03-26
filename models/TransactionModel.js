@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 const TransactionSchema = new mongoose.Schema({
   
   sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  recipient: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  amount: { type: Number, min: 0 },
+  receiver: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  hourTokens: { type: Number, default: 0 },
   timestamp: { type: Date, default: Date.now },
 });
 
